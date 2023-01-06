@@ -38,7 +38,7 @@ const isFav = (station) => {
                         Bitrate : {{ station.bitrate }}
                     </span>
                 </div>
-                <p class="mt-1 truncate text-sm text-gray-300">Pays : {{ station.country }}</p>
+                <p class="mt-1 truncate text-sm text-gray-300">Country : {{ station.country }}</p>
             </div>
             <img v-if="station.favicon" class="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" :src="station.favicon" alt="Radio logo" />
             <RadioIcon v-else class="h-10 w-10 flex-shrink-0 rounded-full text-white" />

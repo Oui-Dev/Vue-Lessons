@@ -9,6 +9,7 @@ const store = useStationsStore();
 const search = ref('');
 const stations = ref(store.stations);
 const api = new RadioBrowserApi('Vue radio app');
+api.setBaseUrl('https://de1.api.radio-browser.info');
 
 onMounted(() => {
     getStations();
@@ -59,6 +60,6 @@ async function getStations() {
 <style scoped>
     ul {
         @apply grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8 overflow-y-auto overflow-x-hidden;
-        max-height: 625px;
+        max-height: 66vh;
     }
 </style>
