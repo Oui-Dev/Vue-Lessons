@@ -29,6 +29,7 @@ onMounted(() => {
     }
     window.addEventListener('keydown', (e) => {
         if (e.code === 'Space') {
+            if (document.activeElement.tagName === 'INPUT') return;
             e.preventDefault();
             togglePlay();
         }

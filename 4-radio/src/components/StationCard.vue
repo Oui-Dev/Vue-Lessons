@@ -13,6 +13,7 @@ defineProps({
 
 const favStore = useFavoritesStore();
 const playerStore = usePlayerStore();
+const blacklistDomain = ['kolectiv.fr', 'www.echoes.gr', '970universal.com', 'www.salue.de', 'radiosummernight.ch', 'lh3.googleusercontent.com', 'brigadanews.ph', 'cdnnmundo1.img.sputniknews.com', 'cdnn1.img.sputniknews.com', 'liveradios.in', 'www.deepinradio.com', 'dashradio.com', 'www.addictradio.net', 'beemboomradio.com', '945khi.com'];
 
 const play = (station) => {
     playerStore.set(station);
@@ -26,6 +27,13 @@ const toggleFav = (station) => {
 const isFav = (station) => {
     return favStore.stations.includes(station);
 }
+
+function checkImageUrl(station) {
+    if(!station.favicon) return false;
+    if(blacklistDomain.includes(new URL(station.favicon).hostname)) return false;
+    return true;
+}
+
 </script>
 
 <template>
@@ -40,7 +48,7 @@ const isFav = (station) => {
                 </div>
                 <p class="mt-1 truncate text-sm text-gray-300">Country : {{ station.country }}</p>
             </div>
-            <img v-if="station.favicon" class="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" :src="station.favicon" alt="Radio logo" />
+            <img v-if="checkImageUrl(station)" :src="station.favicon" class="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" alt="Radio logo" />
             <RadioIcon v-else class="h-10 w-10 flex-shrink-0 rounded-full text-white" />
         </div>
         <div>
