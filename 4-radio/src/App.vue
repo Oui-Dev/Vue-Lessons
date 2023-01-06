@@ -32,7 +32,7 @@ nav {
 }
 
 nav a {
-    @apply px-5 text-gray-400 cursor-pointer;
+    @apply px-5 text-gray-400 text-lg cursor-pointer;
 }
 
 nav a.router-link-exact-active {

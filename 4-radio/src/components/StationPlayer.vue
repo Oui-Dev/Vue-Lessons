@@ -3,7 +3,7 @@ import { usePlayerStore } from '@/stores/player';
 import { useFavoritesStore } from '@/stores/favorites';
 import { PlayIcon, PauseIcon, StarIcon, SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/vue/24/outline';
 import { StarIcon as SolidStarIcon } from '@heroicons/vue/24/solid';
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 
 const playerStore = usePlayerStore();
 const favStore = useFavoritesStore();
@@ -16,8 +16,28 @@ const isPaused = ref(false);
 const isLoading = ref(true);
 const volume = ref(100);
 
-watch(hasStation, (hasStation) => {
-    if (hasStation) {
+onMounted(() => {
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.setActionHandler('play', () => {
+            console.log('play');
+            audio.value.play();
+            isPaused.value = false;
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+            console.log('play');
+            audio.value.pause();
+            isPaused.value = true;
+        });
+    }
+});
+
+watch(playerStore, (store) => {
+    if (store.station.url && hasStation.value) {
+        if(audio.value.src) {
+            isLoading.value = true;
+            audio.value.pause();
+        }
+
         audio.value = new Audio(playerStore.station.url);
         audio.value.play();
         audio.value.addEventListener('canplay', () => {
@@ -48,7 +68,7 @@ const toggleFav = () => {
 
 <template>
     <section v-if="hasStation" class="w-full h-full bg-zinc-800">
-        <h3 class="text-lg text-gray-200 text-center pt-2">{{ playerStore.station.name }}</h3>
+        <h3 class="text-base md:text-lg text-gray-200 text-center pt-2 uppercase">{{ playerStore.station.name }}</h3>
         <div class="player">
             <div class="volume-control relative">
                 <SpeakerXMarkIcon v-if="volume <= 0 || isMuted" @click="toggleMute" />
