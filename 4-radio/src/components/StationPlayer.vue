@@ -73,26 +73,28 @@ const toggleFav = () => {
 </script>
 
 <template>
-    <section v-if="hasStation" class="w-full h-full bg-zinc-800">
-        <h3 class="text-base md:text-lg text-gray-200 text-center pt-2 uppercase">{{ playerStore.station.name }}</h3>
-        <div class="player">
-            <div class="volume-control relative">
-                <SpeakerXMarkIcon v-if="volume <= 0 || isMuted" @click="toggleMute" />
-                <SpeakerWaveIcon v-else @click="toggleMute" />
-                <div>
-                    <input v-model="volume" type="range" max="100">
+    <section class="w-full h-full bg-zinc-800">
+        <div v-if="hasStation" class="max-w-7xl mx-auto">
+            <h3 class="text-base md:text-lg text-gray-200 text-center pt-2 uppercase">{{ playerStore.station.name }}</h3>
+            <div class="player">
+                <div class="volume-control relative">
+                    <SpeakerXMarkIcon v-if="volume <= 0 || isMuted" @click="toggleMute" />
+                    <SpeakerWaveIcon v-else @click="toggleMute" />
+                    <div>
+                        <input v-model="volume" type="range" max="100">
+                    </div>
                 </div>
-            </div>
-            <div class="play" @click="togglePlay">
-                <div v-if="isLoading" class="spinner"></div>
-                <PlayIcon v-else-if="isPaused" />
-                <PauseIcon v-else />
-            </div>
-            <div>
-                <button @click="toggleFav">
-                    <SolidStarIcon v-if="isFav" class="green" aria-hidden="true" />
-                    <StarIcon v-else aria-hidden="true" />
-                </button>
+                <div class="play" @click="togglePlay">
+                    <div v-if="isLoading" class="spinner"></div>
+                    <PlayIcon v-else-if="isPaused" />
+                    <PauseIcon v-else />
+                </div>
+                <div>
+                    <button @click="toggleFav">
+                        <SolidStarIcon v-if="isFav" class="green" aria-hidden="true" />
+                        <StarIcon v-else aria-hidden="true" />
+                    </button>
+                </div>
             </div>
         </div>
     </section>
