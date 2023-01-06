@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilisateurs</title>
+</head>
+
+<body>
+    <style>
+        body {
+            padding: 20px;
+            font-family: sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        .table {
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid currentColor;
+            padding: 4px 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #ccc;
+        }
+
+        .table input,
+        .table select {
+            width: calc(100% - 16px);
+            margin: 4px 8px;
+            min-width: 200px;
+        }
+    </style>
+    <div id="app">
+        <h2>{{ usersCount }} utilisateurs</h2>
+        <table class="table">
+            <tr>
+                <th>Civilité</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <select v-model="form.civility">
+                        <option selected></option>
+                        <option>Madame</option>
+                        <option>Monsieur</option>
+                    </select>
+                </th>
+                <th><input type="text" placeholder="Prénom" v-model="form.firstname" /></th>
+                <th><input type="text" placeholder="Nom" v-model="form.lastname" /></th>
+                <th><button @click="addUser">Ajouter</button></th>
+            </tr>
+            <tr v-for="user in users" :key="user.id">
+                <td>{{ user.civility }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                <td><button @click="deleteUser(user.id)">Supprimer</button></td>
+            </tr>
+        </table>
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    users: [
+                        {
+                            id: 0,
+                            civility: 'Madame',
+                            firstname: 'Sylvie',
+                            lastname: 'Dupont'
+                        },
+                        {
+                            id: 1,
+                            civility: 'Monsieur',
+                            firstname: 'Philippe',
+                            lastname: 'Mercier'
+                        }
+                    ],
+                    form: {
+                        civility: '',
+                        firstname: '',
+                        lastname: ''
+                    }
+                }
+            },
+            computed: {
+                usersCount() {
+                    return this.users.length;
+                }
+            },
+            methods: {
+                deleteUser(id) {
+                    this.users = this.users.filter(user => user.id !== id);
+                },
+                addUser() {
+                    const id = 'id-' + Date.now();
+                    if(!this.form.civility || !this.form.firstname || !this.form.lastname) return;
+                    this.users.push({
+                        id: id,
+                        civility: this.form.civility,
+                        firstname: this.form.firstname,
+                        lastname: this.form.lastname
+                    });
+                    this.form.civility = '';
+                    this.form.firstname = '';
+                    this.form.lastname = '';
+                }
+            }
+        })
+        app.mount('#app');
+    </script>
+</body>
+
+</html>

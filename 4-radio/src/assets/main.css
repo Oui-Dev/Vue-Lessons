@@ -1,0 +1,17 @@
+@import './base.css';
+
+* {
+    @apply focus:outline-green-500;
+}
+
+::-webkit-scrollbar {
+    @apply h-2 w-2;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-zinc-600 rounded-lg;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
