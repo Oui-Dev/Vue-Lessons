@@ -19,16 +19,20 @@ const volume = ref(100);
 onMounted(() => {
     if ('mediaSession' in navigator) {
         navigator.mediaSession.setActionHandler('play', () => {
-            console.log('play');
             audio.value.play();
             isPaused.value = false;
         });
         navigator.mediaSession.setActionHandler('pause', () => {
-            console.log('play');
             audio.value.pause();
             isPaused.value = true;
         });
     }
+    window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+            e.preventDefault();
+            togglePlay();
+        }
+    });
 });
 
 watch(playerStore, (store) => {
