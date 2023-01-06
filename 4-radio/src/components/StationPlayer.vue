@@ -13,12 +13,21 @@ const hasStation = computed(() => Object.keys(playerStore.station).length > 0);
 const isFav = computed(() => favStore.stations.includes(playerStore.station));
 const isMuted = ref(false);
 const isPaused = ref(false);
+const isLoading = ref(true);
+const volume = ref(100);
 
 watch(hasStation, (hasStation) => {
     if (hasStation) {
         audio.value = new Audio(playerStore.station.url);
         audio.value.play();
+        audio.value.addEventListener('canplay', () => {
+            isLoading.value = false;
+        });
     }
+});
+
+watch(volume, (data) => {
+    audio.value.volume = data / 100;
 });
 
 const togglePlay = () => {
@@ -41,12 +50,16 @@ const toggleFav = () => {
     <section v-if="hasStation" class="w-full h-full bg-zinc-800">
         <h3 class="text-lg text-gray-200 text-center pt-2">{{ playerStore.station.name }}</h3>
         <div class="player">
-            <div @click="toggleMute">
-                <SpeakerXMarkIcon v-if="isMuted" />
-                <SpeakerWaveIcon v-else />
+            <div class="volume-control relative">
+                <SpeakerXMarkIcon v-if="volume <= 0 || isMuted" @click="toggleMute" />
+                <SpeakerWaveIcon v-else @click="toggleMute" />
+                <div>
+                    <input v-model="volume" type="range" max="100">
+                </div>
             </div>
             <div class="play" @click="togglePlay">
-                <PlayIcon v-if="isPaused" />
+                <div v-if="isLoading" class="spinner"></div>
+                <PlayIcon v-else-if="isPaused" />
                 <PauseIcon v-else />
             </div>
             <div>
@@ -72,5 +85,30 @@ div.play svg {
 }
 svg.green {
     @apply text-green-500;
+}
+
+.volume-control:hover > div {
+    @apply block;
+}
+.volume-control > div {
+    @apply absolute hidden bottom-full -left-3 py-3 px-2;
+}
+.volume-control > div > input {
+    @apply w-8 accent-green-500 cursor-pointer;
+    -webkit-appearance: slider-vertical;
+}
+
+.spinner {
+   @apply w-8 h-8 rounded-full;
+   background: radial-gradient(farthest-side,rgb(34 197 94) 94%,#0000) top/5px 5px no-repeat,
+          conic-gradient(#0000 30%,rgb(34 197 94));
+   -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 5px),#000 0);
+   animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+   100% {
+      transform: rotate(1turn);
+   }
 }
 </style>
