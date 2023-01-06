@@ -14,17 +14,16 @@ defineProps({
 const favStore = useFavoritesStore();
 const playerStore = usePlayerStore();
 
-function play(station) {
-    console.log('play', station);
+const play = (station) => {
     playerStore.set(station);
 }
 
-function toggleFav(station) {
+const toggleFav = (station) => {
     if (isFav(station)) favStore.remove(station.id);
     else favStore.add(station);
 }
 
-function isFav(station) {
+const isFav = (station) => {
     return favStore.stations.includes(station);
 }
 </script>

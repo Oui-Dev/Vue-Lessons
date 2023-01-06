@@ -20,7 +20,6 @@ watch(search, async (value) => {
             hasGeoInfo: true,
             limit: 60
         });
-        console.log('search', stations.value);
     } else {
         getStations();
     }

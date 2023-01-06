@@ -1,46 +1,58 @@
 <script setup>
 import { usePlayerStore } from '@/stores/player';
+import { useFavoritesStore } from '@/stores/favorites';
 import { PlayIcon, PauseIcon, StarIcon, SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/vue/24/outline';
+import { StarIcon as SolidStarIcon } from '@heroicons/vue/24/solid';
 import { ref, computed, watch } from 'vue';
 
-const store = usePlayerStore();
-const hasStation = computed(() => Object.keys(store.station).length > 0);
+const playerStore = usePlayerStore();
+const favStore = useFavoritesStore();
 const audio = ref(new Audio());
-const isMuted = computed(() => audio.value.muted);
-const isPaused = computed(() => audio.value.paused);
+
+const hasStation = computed(() => Object.keys(playerStore.station).length > 0);
+const isFav = computed(() => favStore.stations.includes(playerStore.station));
+const isMuted = ref(false);
+const isPaused = ref(false);
 
 watch(hasStation, (hasStation) => {
     if (hasStation) {
-        audio.value = new Audio(store.station.url);
+        audio.value = new Audio(playerStore.station.url);
         audio.value.play();
     }
 });
 
 const togglePlay = () => {
     audio.value.paused ? audio.value.play() : audio.value.pause();
-    console.log(audio.value.paused);
+    isPaused.value = audio.value.paused;
 }
 
 const toggleMute = () => {
     audio.value.muted = !audio.value.muted;
+    isMuted.value = audio.value.muted;
+}
+
+const toggleFav = () => {
+    if (isFav.value) favStore.remove(playerStore.station.id);
+    else favStore.add(playerStore.station);
 }
 </script>
 
 <template>
-    <section v-if="hasStation" class="w-full border-t border-zinc-600 bg-zinc-800">
+    <section v-if="hasStation" class="w-full h-full bg-zinc-800">
+        <h3 class="text-lg text-gray-200 text-center pt-2">{{ playerStore.station.name }}</h3>
         <div class="player">
             <div @click="toggleMute">
-                <SpeakerWaveIcon v-if="isMuted" />
-                <SpeakerXMarkIcon v-else />
+                <SpeakerXMarkIcon v-if="isMuted" />
+                <SpeakerWaveIcon v-else />
             </div>
             <div class="play" @click="togglePlay">
                 <PlayIcon v-if="isPaused" />
                 <PauseIcon v-else />
-                {{ isPaused }}
             </div>
             <div>
-                <button @click="addFav(store.station.id)">
-                    <StarIcon aria-hidden="true" />
+                <button @click="toggleFav">
+                    <SolidStarIcon v-if="isFav" class="green" aria-hidden="true" />
+                    <StarIcon v-else aria-hidden="true" />
                 </button>
             </div>
         </div>
@@ -49,7 +61,7 @@ const toggleMute = () => {
 
 <style scoped>
 .player {
-    @apply flex justify-between items-center gap-4 p-4 text-white;
+    @apply flex justify-between items-center gap-4 px-3 py-1 text-white;
 }
 
 svg {
@@ -57,5 +69,8 @@ svg {
 }
 div.play svg {
     @apply w-8 h-8 text-green-500;
+}
+svg.green {
+    @apply text-green-500;
 }
 </style>

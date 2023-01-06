@@ -17,7 +17,7 @@ import StationPlayer from '@/components/StationPlayer.vue';
         <RouterView />
     </main>
 
-    <footer class="fixed bottom-0 w-full h-16">
+    <footer class="fixed bottom-0 w-full h-20">
         <StationPlayer class="p-security" />
     </footer>
 </template>
