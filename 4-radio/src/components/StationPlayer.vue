@@ -73,8 +73,8 @@ const toggleFav = () => {
 </script>
 
 <template>
-    <section class="w-full h-full bg-zinc-800">
-        <div v-if="hasStation" class="max-w-7xl mx-auto">
+    <section v-if="hasStation" class="w-full h-full bg-zinc-800">
+        <div class="max-w-7xl mx-auto">
             <h3 class="text-base md:text-lg text-gray-200 text-center pt-2 uppercase">{{ playerStore.station.name }}</h3>
             <div class="player">
                 <div class="volume-control relative">
