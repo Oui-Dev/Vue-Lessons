@@ -1,6 +1,6 @@
 <script setup>
 import { MagnifyingGlassIcon } from "@heroicons/vue/24/outline";
-import { RadioBrowserApi, StationSearchType } from 'radio-browser-api';
+import { RadioBrowserApi } from 'radio-browser-api';
 import { ref, watch, onMounted } from 'vue';
 import { useStationsStore } from '@/stores/stations';
 import StationCard from '@/components/StationCard.vue';
@@ -20,9 +20,9 @@ onMounted(() => {
 })
 
 watch(form, async (value) => {
-    if(value.search.length > 2 || value.country !== '') {
+    if(value.search.length > 1 || value.country !== '') {
         stations.value = await api.searchStations({
-            ...(value.search.length > 2 && { name: value.search }),
+            ...(value.search.length > 1 && { name: value.search }),
             ...(value.country !== '' && { countryCode: value.country }),
             hasGeoInfo: true,
             limit: 60

@@ -7,14 +7,15 @@ import { ref, computed, watch, onMounted } from 'vue';
 
 const playerStore = usePlayerStore();
 const favStore = useFavoritesStore();
-const audio = ref(new Audio());
 
-const hasStation = computed(() => Object.keys(playerStore.station).length > 0);
-const isFav = computed(() => favStore.stations.includes(playerStore.station));
+const audio = ref(new Audio());
 const isMuted = ref(false);
 const isPaused = ref(false);
 const isLoading = ref(true);
 const volume = ref(100);
+
+const hasStation = computed(() => Object.keys(playerStore.station).length > 0);
+const isFav = computed(() => favStore.stations.includes(playerStore.station));
 
 onMounted(() => {
     if ('mediaSession' in navigator) {
