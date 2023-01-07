@@ -46,6 +46,7 @@ watch(playerStore, (store) => {
 
         audio.value = new Audio(playerStore.station.url);
         audio.value.play();
+        audio.value.volume = volume.value / 100;
         audio.value.addEventListener('canplay', () => {
             isLoading.value = false;
         });
