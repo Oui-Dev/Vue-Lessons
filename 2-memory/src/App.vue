@@ -13,7 +13,7 @@ onMounted(async () => {
 });
 
 const isDisplayed = (card) => {
-    return !clickedCards.value.includes(card) && !solvedCards.value.includes(card);
+    return !clickedCards.value.includes(card) && !solvedCards.value.includes(card) ? '' : 'is-flipped';
 }
 
 async function fetchCards() {
@@ -69,10 +69,10 @@ async function restart() {
 
     <main class="flex flex-col items-center justify-center mt-12">
         <section class="grid grid-cols-4 gap-4">
-            <div v-for="card in cards" :key="card.id" class="relative">
-                <img :src="card.image" alt="memory img" :class="['w-24 h-32', {'animation' : isDisplayed(card)}]">
-                <div v-show="isDisplayed(card)" @click="changeState(card)"
-                    class="w-24 h-32 absolute inset-0 bg-gray-300 rounded-md cursor-pointer animation"
+            <div v-for="card in cards" :key="card.id" class="card" :class="isDisplayed(card)">
+                <img :src="card.image" alt="memory img" class="w-24 h-32">
+                <div @click="changeState(card)"
+                    class="w-24 h-32 absolute inset-0 bg-gray-300 rounded-md cursor-pointer"
                 />
             </div>
         </section>
@@ -91,16 +91,21 @@ async function restart() {
 </template>
 
 <style scoped>
-.animation {
-    animation: flip 1s;
-}
-
-@keyframes flip {
-    0% {
-        transform: rotateY(0deg);
+    .card{
+        @apply relative;
+        transition: 0.5s transform ease-in;
+        transform-style: preserve-3d;
     }
-    100% {
+
+    .card > * {
+        backface-visibility: hidden;
+    }
+
+    .card > img {
         transform: rotateY(180deg);
     }
-}
+
+    .card.is-flipped {
+        transform: rotateY(180deg);
+    }
 </style>
