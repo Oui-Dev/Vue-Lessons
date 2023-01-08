@@ -28,11 +28,11 @@ import StationPlayer from '@/components/StationPlayer.vue';
 }
 
 nav {
-    @apply w-full flex items-center justify-center divide-x divide-gray-400;
+    @apply w-full flex items-center justify-center divide-x divide-gray-800 dark:divide-gray-400;
 }
 
 nav a {
-    @apply px-5 text-gray-400 text-lg cursor-pointer;
+    @apply px-5 text-gray-800 dark:text-gray-400 text-lg cursor-pointer;
 }
 
 nav a.router-link-exact-active {

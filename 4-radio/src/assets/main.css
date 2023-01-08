@@ -9,7 +9,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-zinc-600 rounded-lg;
+    @apply bg-zinc-300 dark:bg-zinc-600 rounded-lg;
 }
 
 ::-webkit-scrollbar-track {

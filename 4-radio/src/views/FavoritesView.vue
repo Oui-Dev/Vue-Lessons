@@ -8,7 +8,7 @@ const hasFavorites = computed(() => store.stations.length > 0);
 </script>
 
 <template>
-    <h1 class="text-center text-xl text-gray-100 mt-8">My favorites stations</h1>
+    <h1 class="text-center text-xl text-gray-800 dark:text-gray-100 mt-8">My favorites stations</h1>
 
     <!-- Stations list -->
     <ul v-if="hasFavorites" role="list">

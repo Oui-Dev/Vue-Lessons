@@ -74,9 +74,9 @@ const toggleFav = () => {
 </script>
 
 <template>
-    <section v-if="hasStation" class="w-full h-full bg-zinc-800">
+    <section v-if="hasStation" class="w-full h-full bg-gray-50 dark:bg-zinc-800">
         <div class="max-w-7xl mx-auto">
-            <h3 class="text-base md:text-lg text-gray-200 text-center pt-2 uppercase">{{ playerStore.station.name }}</h3>
+            <h3 class="text-base md:text-lg text-gray-900 dark:text-gray-200 text-center pt-2 uppercase">{{ playerStore.station.name }}</h3>
             <div class="player">
                 <div class="volume-control relative">
                     <SpeakerXMarkIcon v-if="volume <= 0 || isMuted" @click="toggleMute" />
@@ -103,11 +103,11 @@ const toggleFav = () => {
 
 <style scoped>
 .player {
-    @apply flex justify-between items-center gap-4 px-3 py-1 text-white;
+    @apply flex justify-between items-center gap-4 px-3 py-1;
 }
 
 svg {
-    @apply w-5 h-5 text-gray-200 cursor-pointer;
+    @apply w-5 h-5 text-gray-800 dark:text-gray-200 cursor-pointer;
 }
 div.play svg {
     @apply w-8 h-8 text-green-500;

@@ -51,7 +51,7 @@ async function getStations() {
     <!-- Search input -->
     <div class="mx-auto max-w-md relative rounded-full shadow-sm mt-8">
         <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-            <MagnifyingGlassIcon class="h-5 w-5 text-gray-400" />
+            <MagnifyingGlassIcon class="h-5 w-5 text-gray-800 dark:text-gray-400" />
         </div>
         <input type="text" v-model="form.search" placeholder="Search..."/>
         <div class="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -88,10 +88,10 @@ async function getStations() {
     }
 
     input {
-        @apply block w-full rounded-full pl-10 pr-32 py-2 bg-transparent border border-gray-500 sm:text-sm;
+        @apply block w-full rounded-full pl-10 pr-32 py-2 bg-transparent border border-gray-900 dark:border-gray-500 sm:text-sm;
     }
 
     select {
-        @apply h-full rounded-md border-transparent bg-transparent pr-2 text-right text-gray-300 focus:outline-none cursor-pointer;
+        @apply h-full rounded-md border-transparent bg-transparent pr-2 text-right text-gray-700 dark:text-gray-300 focus:outline-none cursor-pointer;
     }
 </style>
