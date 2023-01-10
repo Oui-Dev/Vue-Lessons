@@ -8,8 +8,8 @@ import StationPlayer from '@/components/StationPlayer.vue';
         <img alt="Vue logo" class="absolute top-4 md:top-3 h-8 md:h-10" src="@/assets/logo.svg" />
 
         <nav>
-            <RouterLink to="/">Home</RouterLink>
-            <RouterLink to="/favorites">Favorites</RouterLink>
+            <RouterLink :to="{ name: 'home'}">Home</RouterLink>
+            <RouterLink :to="{ name: 'favorites'}">Favorites</RouterLink>
         </nav>
     </header>
 
