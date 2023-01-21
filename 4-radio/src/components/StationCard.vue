@@ -29,7 +29,7 @@ const play = () => {
 }
 
 const toggleFav = () => {
-    if (isFav(props.station)) favStore.remove(props.station.id);
+    if (isFav.value) favStore.remove(props.station.id);
     else favStore.add(props.station);
 }
 </script>

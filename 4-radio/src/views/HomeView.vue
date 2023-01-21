@@ -94,4 +94,7 @@ async function getStations() {
     select {
         @apply h-full rounded-md border-transparent bg-transparent pr-2 text-right text-gray-700 dark:text-gray-300 focus:outline-none cursor-pointer;
     }
+    select option {
+        @apply text-gray-700;
+    }
 </style>
