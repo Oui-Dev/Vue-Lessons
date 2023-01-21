@@ -12,8 +12,12 @@ onMounted(async () => {
     cards.value = shuffleCards(cards.value);
 });
 
-const isDisplayed = (card) => {
-    return !clickedCards.value.includes(card) && !solvedCards.value.includes(card) ? '' : 'is-flipped';
+const cardState = (card) => {
+    let classes = "";
+    classes += !clickedCards.value.includes(card) && !solvedCards.value.includes(card) ? '' : 'is-flipped';
+    classes += !solvedCards.value.includes(card) ? '' : ' is-solved';
+
+    return classes;
 }
 
 async function fetchCards() {
@@ -50,7 +54,7 @@ function changeState(card) {
         }
         timeoutId.value = setTimeout(() => {
             clickedCards.value = [];
-        }, 1500);
+        }, 1000);
     }
 }
 
@@ -69,8 +73,8 @@ async function restart() {
 
     <main class="flex flex-col items-center justify-center mt-12">
         <section class="grid grid-cols-4 gap-4">
-            <div v-for="card in cards" :key="card.id" class="card" :class="isDisplayed(card)">
-                <img :src="card.image" alt="memory img" class="w-24 h-32">
+            <div v-for="card in cards" :key="card.id" class="card" :class="cardState(card)">
+                <img :src="card.image" alt="memory img" class="w-24 h-32 rounded-md">
                 <div @click="changeState(card)"
                     class="w-24 h-32 absolute inset-0 bg-gray-300 rounded-md cursor-pointer"
                 />
@@ -92,9 +96,10 @@ async function restart() {
 
 <style scoped>
     .card{
-        @apply relative;
-        transition: 0.5s transform ease-in;
+        @apply relative rounded-md;
+        transition: 0.4s transform ease;
         transform-style: preserve-3d;
+        box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
     }
 
     .card > * {
@@ -108,4 +113,14 @@ async function restart() {
     .card.is-flipped {
         transform: rotateY(180deg);
     }
+
+    .card.is-solved {
+        box-shadow: 0px 0px 20px rgba(0, 255, 0, 0.5);
+        animation:  0.8s ease 0.2s 1 normal none running bounce;
+    }
+
+    @keyframes bounce {
+        0%, 100% {z-index: 2; scale: 100%; rotate:0deg;} 
+        50% {z-index: 2; scale: 130%; rotate:15deg;}
+    } 
 </style>
