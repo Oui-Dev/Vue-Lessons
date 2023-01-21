@@ -1,6 +1,8 @@
 # 2-memory
 
-This template should help get you started developing with Vue 3 in Vite.
+## Project Description
+
+This project is a simple memory game. It uses the [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) and [Vite](https://vitejs.dev/). It also uses [Tailwind CSS](https://tailwindcss.com/) for styling.
 
 ## Recommended IDE Setup
 
