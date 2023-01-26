@@ -14,18 +14,18 @@
         <!-- Laptop -->
         <nav class="hidden lg:flex">
             <div class="logo-side">
-                <RouterLink to="/">
+                <RouterLink :to="{name: 'products'}">
                     <img alt="Vue logo" src="@/assets/logo.svg" width="45" height="45" />
                 </RouterLink>
             </div>
 
             <div class="menu-side">
-                <RouterLink to="/">Produits</RouterLink>
-                <RouterLink to="/categories">Catégorie</RouterLink>
+                <RouterLink :to="{name: 'products'}">Produits</RouterLink>
+                <RouterLink :to="{name: 'categories'}">Catégorie</RouterLink>
             </div>
 
             <div class="button-side">
-                <RouterLink to="/cart">
+                <RouterLink :to="{name: 'cart'}">
                     <ShoppingCartIcon class="w-6 h-6" />
                 </RouterLink>
             </div>
@@ -34,7 +34,7 @@
         <!-- Tablet and mobile -->
         <nav class="flex lg:hidden">
             <div class="logo-side">
-                <RouterLink to="/">
+                <RouterLink :to="{name: 'products'}">
                     <img alt="Vue logo" src="@/assets/logo.svg" width="35" height="35" />
                 </RouterLink>
             </div>
@@ -47,9 +47,9 @@
             <div class="absolute top-16 -mt-px right-0 z-10 w-screen max-w-lg">
                 <div id="sidebar" class="overflow-hidden shadow-lg rounded-b-lg border-t border-gray-300" :class="{'reduced' : isReduced}">
                     <div class="relative grid gap-2 px-5 py-5 text-sm md:text-base">
-                        <RouterLink to="/">Tous les produits</RouterLink>
-                        <RouterLink to="/categories">Catégorie</RouterLink>
-                        <RouterLink to="/cart">Mon panier</RouterLink>
+                        <RouterLink :to="{name: 'products'}">Tous les produits</RouterLink>
+                        <RouterLink :to="{name: 'categories'}">Catégorie</RouterLink>
+                        <RouterLink :to="{name: 'cart'}">Mon panier</RouterLink>
                     </div>
                 </div>
             </div>
