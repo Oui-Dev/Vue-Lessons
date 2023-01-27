@@ -24,7 +24,7 @@ const isLoading = computed(() => store.isLoading ?? false);
 <template>
     <main>
         <LoadingSpinner :display="isLoading" />
-        <SelectFilter @search="" @filter="" />
+        <SelectFilter />
 
         <h2 class="sr-only">Products</h2>
 

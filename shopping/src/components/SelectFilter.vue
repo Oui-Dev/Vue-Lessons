@@ -1,18 +1,19 @@
 <script setup>
+import { useItemsStore } from '@/stores/items';
 import { MagnifyingGlassIcon } from "@heroicons/vue/24/outline";
 import { reactive, watch } from 'vue';
 
-const emit = defineEmits(['search', 'filter']);
+const store = useItemsStore();
 const form = reactive({ 
     search: '',
     filter: 'rating'
 });
 
-watch(form, (value) => {
-    if(value.search !== form.search) {
-        emit('search', value.search);
-    } else if(value.filter !== form.filter) {
-        emit('filter', value.filter);
+watch(() => ({...form}), (newValue, oldValue) => {
+    if(newValue.search !== oldValue.search) {
+        store.searchItems(newValue.search);
+    } else if(newValue.filter !== oldValue.filter) {
+        store.orderItems(newValue.filter);
     }
 }, { deep: true });
 </script>

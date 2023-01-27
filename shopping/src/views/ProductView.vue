@@ -81,7 +81,7 @@ const closeImageViewer = () => {
                                 aria-hidden="true" />
                         </div>
                         <p class="sr-only">{{ reviewsAverage }} out of 5 stars</p>
-                        <pp class="ml-3 text-sm font-medium text-green-600">{{ product.stock }} reviews</pp>
+                        <p class="ml-3 text-sm font-medium text-green-600">{{ product.stock }} reviews</p>
                     </div>
                 </div>
 
