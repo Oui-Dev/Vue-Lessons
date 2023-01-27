@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ProductsListView from '../views/ProductsListView.vue';
+import ProductsList from '../views/ProductsList.vue';
 import ProductView from '../views/ProductView.vue';
-import CategoriesView from '../views/CategoriesView.vue';
 import CartView from '../views/CartView.vue';
 
 const router = createRouter({
@@ -10,17 +9,17 @@ const router = createRouter({
         {
             path: '/',
             name: 'products',
-            component: ProductsListView
+            component: ProductsList
+        },
+        {
+            path: '/categories/:category',
+            name: 'categories',
+            component: ProductsList
         },
         {
             path: '/product/:id',
             name: 'product',
             component: ProductView
-        },
-        {
-            path: '/categories/:category',
-            name: 'categories',
-            component: CategoriesView
         },
         {
             path: '/cart',

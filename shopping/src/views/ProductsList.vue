@@ -6,15 +6,17 @@ import ProductCard from '@/components/ProductCard.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import SelectFilter from '../components/SelectFilter.vue';
 
-const store = useItemsStore();
 const route = useRoute();
+const store = useItemsStore();
 
 onMounted(() => {
-    store.fetchItemsByCategories(route.params.category);
+    if(route.name === 'categories') store.fetchItemsByCategories(route.params.category);
+    else if(route.name === 'products') store.fetchItems();
 });
 
-watch(() => route.params, (value) => {
-    store.fetchItemsByCategories(value.category);
+watch(() => ({...route}), (value) => {
+    if(value.name === 'categories') store.fetchItemsByCategories(value.params.category);
+    else if(value.name === 'products') store.fetchItems();
 });
 
 const products = computed(() => store.items.products ?? []);
