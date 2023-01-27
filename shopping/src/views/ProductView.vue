@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
 import { useItemsStore } from '@/stores/items';
+import { useCartStore } from '@/stores/cart';
 import { StarIcon } from '@heroicons/vue/20/solid';
 import { onMounted, computed, watch, ref } from 'vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
@@ -8,18 +9,19 @@ import ImageViewer from '../components/ImageViewer.vue';
 
 const router = useRouter();
 const params = useRoute().params;
-const store = useItemsStore();
+const itemsStore = useItemsStore();
+const cartStore = useCartStore();
 const imageViewerSrc = ref('');
 
 onMounted(() => {
-    store.fetchItemByID(params.id);
+    itemsStore.fetchItemByID(params.id);
 });
 
-const product = computed(() => store.items.product ?? {});
-const isLoading = computed(() => store.isLoading ?? false);
+const product = computed(() => itemsStore.items.product ?? {});
+const isLoading = computed(() => itemsStore.isLoading ?? false);
 const reviewsAverage = computed(() => Math.round(product.value.rating ?? 0));
 
-watch(() => store.error, (error) => {
+watch(() => itemsStore.error, (error) => {
     if (error) router.push({ name: 'products' });
 });
 
@@ -29,6 +31,10 @@ const openImageViewer = (image) => {
 const closeImageViewer = () => {
     imageViewerSrc.value = '';
 };
+
+function addToCart() {
+    cartStore.addToCart(product.value.id);
+}
 </script>
 
 <template>

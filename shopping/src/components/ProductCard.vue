@@ -1,8 +1,10 @@
 <script setup>
-import { RouterLink } from 'vue-router';
 import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
 import { StarIcon } from '@heroicons/vue/20/solid';
+import { useCartStore } from '@/stores/cart';
 
+const cartStore = useCartStore();
 const props = defineProps({
     product: {
         type: Object,
@@ -13,7 +15,7 @@ const props = defineProps({
 const reviewsAverage = computed(() => Math.round(props.product.rating));
 
 function addToCart() {
-    console.log('Add to cart');
+    cartStore.addToCart(props.product.id);
 }
 </script>
 
