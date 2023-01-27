@@ -1,27 +1,59 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 export const useItemsStore = defineStore({
     id: 'items',
     state: () => ({
-        items: []
+        items: {},
+        isLoading: false,
+        error: false
     }),
     actions: {
         fetchItems() {
-            fetch('https://dummyjson.com/products')
-            .then(res => res.json())
-            .then(data => {
-                this.items = data
-            });
+            this.isLoading = true;
+            fetch('https://dummyjson.com/products?limit=100')
+                .then(res => res.json())
+                .then(data => {
+                    this.items.products = data.products;
+                    setTimeout(() => {this.isLoading = false;}, 500);
+                });
+        },
+        fetchCategories() {
+            fetch('https://dummyjson.com/products/categories')
+                .then(res => res.json())
+                .then(data => {
+                    this.items.categories = data;
+                });
+        },
+        fetchItemsByCategories(category) {
+            this.isLoading = true;
+            fetch(`https://dummyjson.com/products/category/${category}`)
+                .then(res => res.json())
+                .then(data => {
+                    this.items.products = data.products;
+                    setTimeout(() => {this.isLoading = false;}, 500);
+                });
+        },
+        fetchItemByID(id) {
+            this.isLoading = true;
+            fetch(`https://dummyjson.com/products/${id}`)
+                .then(res => {
+                    if(res.ok) return res.json();
+                    else throw new Error('Item not found');
+                })
+                .then(data => {
+                    this.items.product = data;
+                    this.isLoading = false;
+                })
+                .catch(() => {
+                    this.isLoading = false;
+                    this.error = true;
+                });
+        },
+
+        getItemsFromSearch(search) {
+            return this.items.products.filter(item => item.title.toLowerCase().includes(search.toLowerCase()));
         }
     },
-    getters: {
-        getItems(state) {
-            return state.items
-        },
-        // getitemsByCategory(category) {
-        //     return this.items.filter(item => item.category === category);
-        // }
-    }
 })
 
 

@@ -6,11 +6,15 @@ export const useCartStore = defineStore({
         items: []
     }),
     actions: {
-        addItem(item) {
+        getCartItems() {
+            return this.items
+        },
+
+        addToCart(item) {
             this.items.push(item)
         },
         
-        removeItem(item) {
+        removeFromCart(item) {
             this.items = this.items.filter(i => i.id !== item.id)
         }
     }
