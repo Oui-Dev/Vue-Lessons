@@ -60,8 +60,8 @@ const openSideBar = () => isReduced.value = !isReduced.value;
                 <XMarkIcon v-else class="w-6 h-6" @click="openSideBar" />
             </div>
 
-            <div class="absolute top-16 -mt-px right-0 z-10 w-screen max-w-lg">
-                <div id="sidebar" class="overflow-hidden shadow-lg rounded-b-lg border-t border-gray-300" :class="{'reduced' : isReduced}">
+            <div id="sidebar" :class="{'reduced' : isReduced}">
+                <div class="overflow-hidden shadow-lg rounded-b-lg border-t border-gray-300">
                     <div class="relative grid gap-2 px-5 py-5 text-sm md:text-base">
                         <RouterLink :to="{name: 'products'}">All products</RouterLink>
                         <RouterLink v-for="category in categories.slice(0, 3)" :key="category" :to="{name: 'categories', params: {category: category}}">
@@ -114,12 +114,12 @@ header {
         }
 
         #sidebar {
-            @apply bg-white opacity-100;
+            @apply bg-white opacity-100 z-10 absolute top-16 -mt-px right-0 w-screen max-w-lg;
             pointer-events: all;
             transition: opacity 400ms ease 0ms;
 
             &.reduced {
-                @apply opacity-0 pointer-events-none;
+                @apply opacity-0 pointer-events-none z-0;
                 transition: opacity 400ms ease 0ms;
             }
         }
