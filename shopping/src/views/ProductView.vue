@@ -49,18 +49,18 @@ function addToCart() {
         </div>
         <!-- Image gallery -->
         <div class="gallery">
-            <div v-if="product.images?.length > 0" @click="openImageViewer(product.images[0])" class="aspect-w-4 aspect-h-5 lg:aspect-w-3 lg:aspect-h-4 imgDiv">
+            <div v-if="product.images?.length > 0" @click="openImageViewer(product.images[0])" class="imgDiv">
                 <img :src="product.images[0]" alt="Product image" />
             </div>
             <div v-if="product.images?.length > 2" class="hidden sm:grid sm:grid-cols-1 sm:gap-y-8">
-                <div @click="openImageViewer(product.images[1])" class="aspect-w-3 aspect-h-2 imgDiv">
+                <div @click="openImageViewer(product.images[1])" class="imgDiv">
                     <img :src="product.images[1]" alt="Product image" />
                 </div>
-                <div @click="openImageViewer(product.images[2])" class="aspect-w-3 aspect-h-2 imgDiv">
+                <div @click="openImageViewer(product.images[2])" class="imgDiv">
                     <img :src="product.images[2]" alt="Product image" />
                 </div>
             </div>
-            <div v-if="product.images?.length > 3" @click="openImageViewer(product.images[3])" class="aspect-w-3 aspect-h-4 hidden lg:block imgDiv">
+            <div v-if="product.images?.length > 3" @click="openImageViewer(product.images[3])" class="imgDiv">
                 <img :src="product.images[3]" alt="Product image" />
             </div>
         </div>
@@ -100,7 +100,7 @@ function addToCart() {
             <div class="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pr-8">
                 <!-- Description and details -->
                 <div>
-                    <h2 class="text-xl">{{ product.title }}</h2>
+                    <h2 class="text-xl font-semibold">{{ product.title }}</h2>
                 </div>
                 <div class="mt-8">
                     <h3 class="sr-only">Description</h3>
@@ -116,10 +116,11 @@ function addToCart() {
 
 <style lang="scss" scoped>
 .gallery {
-    @apply mx-auto overflow-hidden mt-6 px-6 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8 sm:px-8;
+    @apply flex justify-center overflow-hidden mt-6 px-6 gap-8;
+    max-height: 448px;
 
     .imgDiv {
-        @apply overflow-hidden rounded-lg cursor-pointer;
+        @apply overflow-hidden rounded-lg cursor-pointer max-w-xs;
     }
 
     img {
