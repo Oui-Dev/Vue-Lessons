@@ -25,15 +25,9 @@ const props = defineProps({
 
 const reviewsAverage = computed(() => Math.round(props.product.rating));
 
-function addToCart() {
-    cartStore.addToCart(props.product);
-}
-function removeOneFromCart() {
-    cartStore.removeOneFromCart(props.product.id);
-}
-function removeAllFromCart() {
-    cartStore.removeAllFromCart(props.product.id);
-}
+const addToCart = () => cartStore.addToCart(props.product);
+const removeOneFromCart = () => cartStore.removeOneFromCart(props.product.id);
+const removeAllFromCart = () => cartStore.removeAllFromCart(props.product.id);
 </script>
 
 <template>

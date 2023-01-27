@@ -7,9 +7,7 @@ const store = useCartStore();
 const cartItems = computed(() => store.items);
 const cardTotal = computed(() => store.getCartTotalPrice);
 
-function reset() {
-    store.resetCart();
-}
+const reset = () => store.resetCart();
 </script>
 
 <template>

@@ -17,24 +17,17 @@ onMounted(() => {
     itemsStore.fetchItemByID(params.id);
 });
 
-const product = computed(() => itemsStore.items.product ?? {});
-const isLoading = computed(() => itemsStore.isLoading ?? false);
-const reviewsAverage = computed(() => Math.round(product.value.rating ?? 0));
-
 watch(() => itemsStore.error, (error) => {
     if (error) router.push({ name: 'products' });
 });
 
-const openImageViewer = (image) => {
-    imageViewerSrc.value = image;
-};
-const closeImageViewer = () => {
-    imageViewerSrc.value = '';
-};
+const product = computed(() => itemsStore.items.product ?? {});
+const isLoading = computed(() => itemsStore.isLoading ?? false);
+const reviewsAverage = computed(() => Math.round(product.value.rating ?? 0));
 
-function addToCart() {
-    cartStore.addToCart(product.value);
-}
+const openImageViewer = (image) => imageViewerSrc.value = image;
+const closeImageViewer = () => imageViewerSrc.value = '';
+const addToCart = () => cartStore.addToCart(product.value);
 </script>
 
 <template>

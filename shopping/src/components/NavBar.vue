@@ -1,24 +1,22 @@
 <script setup>
-    import { RouterLink } from 'vue-router';
-    import { useItemsStore } from '@/stores/items';
-    import { useCartStore } from '@/stores/cart';
-    import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
-    import { ref, onMounted, computed } from 'vue';
+import { RouterLink } from 'vue-router';
+import { useItemsStore } from '@/stores/items';
+import { useCartStore } from '@/stores/cart';
+import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { ref, onMounted, computed } from 'vue';
 
-    const isReduced = ref(true);
-    const itemsStore = useItemsStore();
-    const cartStore = useCartStore();
+const isReduced = ref(true);
+const itemsStore = useItemsStore();
+const cartStore = useCartStore();
 
-    const openSideBar = () => {
-        isReduced.value = !isReduced.value;
-    };
+onMounted(() => {
+    itemsStore.fetchCategories();
+});
 
-    onMounted(() => {
-        itemsStore.fetchCategories();
-    });
+const categories = computed(() => itemsStore.items.categories ?? []);
+const cartCount = computed(() => cartStore.getCartCount);
 
-    const categories = computed(() => itemsStore.items.categories ?? []);
-    const cartCount = computed(() => cartStore.getCartCount);
+const openSideBar = () => isReduced.value = !isReduced.value;
 </script>
 
 <template>
