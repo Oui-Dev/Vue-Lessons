@@ -33,17 +33,3 @@ const isLoading = computed(() => store.isLoading ?? false);
         </div>
     </main>
 </template>
-
-<style lang="scss" scoped>
-    input {
-        @apply block w-full rounded-full pl-10 pr-32 py-2 bg-transparent border border-gray-900 sm:text-sm focus:outline-green-500;
-    }
-
-    select {
-        @apply h-full rounded-md border-transparent bg-transparent pr-2 text-right text-gray-700 focus:outline-none cursor-pointer;
-        
-        option {
-            @apply text-gray-700;
-        }
-    }
-</style>
