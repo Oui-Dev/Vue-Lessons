@@ -18,7 +18,7 @@
     });
 
     const categories = computed(() => itemsStore.items.categories ?? []);
-    const cartCount = computed(() => cartStore.getCartItems.length);
+    const cartCount = computed(() => cartStore.getCartCount);
 </script>
 
 <template>

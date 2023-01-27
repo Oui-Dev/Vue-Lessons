@@ -1,10 +1,10 @@
 <script setup>
-// import { useCartStore } from "@/stores/useCart";
-// const store = useCartStore();
-// onMounted(() => store.getCartItems());
-//
-// const cartItems = computed(() => store.items ?? []);
+import { useCartStore } from "@/stores/cart";
+import { computed } from "vue";
 
+const store = useCartStore();
+const cartItems = computed(() => store.items);
+console.log(cartItems.value);
 </script>
 
 <template>
