@@ -18,17 +18,17 @@ export const useCartStore = defineStore('cart', () => {
         return total;
     });
 
-    function addToCart(id) {
-        const item = items.value.find(item => item.id === id);
+    function addToCart(product) {
+        const item = items.value.find(item => item.id === product.id);
 
         if(item) item.quantity++;
-        else items.value.push({ id, quantity: 1 });
+        else items.value.push({ product, quantity: 1 });
     }
     function removeFromCart(id) {
         const item = items.value.find(item => item.id === id);
 
         if(item.quantity > 1) item.quantity--;
-        else items.value = items.value.filter(item => item.id !== id);
+        else items.value = items.value.filter(item => item.product.id !== id);
     }
 
     return { items, getCartCount, getCartTotalPrice, addToCart, removeFromCart };

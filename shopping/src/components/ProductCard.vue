@@ -15,7 +15,7 @@ const props = defineProps({
 const reviewsAverage = computed(() => Math.round(props.product.rating));
 
 function addToCart() {
-    cartStore.addToCart(props.product.id);
+    cartStore.addToCart(props.product);
 }
 </script>
 

@@ -33,7 +33,7 @@ const closeImageViewer = () => {
 };
 
 function addToCart() {
-    cartStore.addToCart(product.value.id);
+    cartStore.addToCart(product.value);
 }
 </script>
 

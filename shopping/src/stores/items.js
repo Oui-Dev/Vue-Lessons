@@ -9,7 +9,7 @@ export const useItemsStore = defineStore('items', () => {
 
     function fetchItems() {
         isLoading.value = true;
-        fetch('https://dummyjson.com/products?limit=100')
+        return fetch('https://dummyjson.com/products?limit=100')
             .then(res => res.json())
             .then(data => {
                 const tmp = data.products.sort((a, b) => b.rating - a.rating);
@@ -27,15 +27,21 @@ export const useItemsStore = defineStore('items', () => {
     }
     function fetchItemsByCategories(category) {
         if(category === 'others') {
-            if(items.value.products.length === 0) fetchItems(); 
+            const subFct = () => {
+                const tmp = items.value.products.filter(
+                    item => item.category !== 'smartphones'
+                    && item.category !== 'laptops'
+                    && item.category !== 'fragrances'
+                ).sort((a, b) => b.rating - a.rating);
+                items.value.products = tmp;
+                backupItems.value = tmp;
+            };
 
-            const tmp = items.value.products.filter(
-                item => item.category !== 'smartphones'
-                && item.category !== 'laptops'
-                && item.category !== 'fragrances'
-            ).sort((a, b) => b.rating - a.rating);
-            items.value.products = tmp;
-            backupItems.value = tmp;
+            if(!items.value.products || items.value.products.length === 0) {
+                fetchItems().then(() => subFct());
+            } else {
+                subFct();
+            }
         } else {
             isLoading.value = true;
             fetch(`https://dummyjson.com/products/category/${category}`)
