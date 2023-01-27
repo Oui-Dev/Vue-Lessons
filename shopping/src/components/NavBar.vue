@@ -1,21 +1,24 @@
 <script setup>
     import { RouterLink } from 'vue-router';
     import { useItemsStore } from '@/stores/items';
+    import { useCartStore } from '@/stores/cart';
     import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
     import { ref, onMounted, computed } from 'vue';
 
     const isReduced = ref(true);
-    const store = useItemsStore();
+    const itemsStore = useItemsStore();
+    const cartStore = useCartStore();
 
     const openSideBar = () => {
         isReduced.value = !isReduced.value;
     };
 
     onMounted(() => {
-        store.fetchCategories();
+        itemsStore.fetchCategories();
     });
 
-    const categories = computed(() => store.items.categories ?? []);
+    const categories = computed(() => itemsStore.items.categories ?? []);
+    const cartCount = computed(() => cartStore.getCartItems.length);
 </script>
 
 <template>
@@ -38,9 +41,10 @@
                 </RouterLink>
             </div>
 
-            <div class="button-side">
+            <div class="button-side relative">
                 <RouterLink :to="{name: 'cart'}">
                     <ShoppingCartIcon class="w-6 h-6" />
+                    <span v-if="cartCount > 0" class="absolute bottom-3 left-3 rounded-full bg-green-500 text-white px-1 text-xs">{{ cartCount }}</span>
                 </RouterLink>
             </div>
         </nav>
@@ -68,7 +72,10 @@
                         <RouterLink :to="{name: 'categories', params: {category: 'others'}}">
                             Others
                         </RouterLink>
-                        <RouterLink :to="{name: 'cart'}">My cart</RouterLink>
+                        <RouterLink :to="{name: 'cart'}" class="border-solid border-t border-gray-300 flex gap-3 mt-3 pt-4">
+                            <ShoppingCartIcon class="w-6 h-6" />
+                            <span>My cart ({{ cartCount }} item{{ cartCount.length === 1 ? '' : 's' }})</span>
+                        </RouterLink>
                     </div>
                 </div>
             </div>
