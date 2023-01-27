@@ -53,7 +53,7 @@ export const useItemsStore = defineStore('items', () => {
             });
     }
     function searchItems(search) {
-        if(!search) items.value.products = backupItems.value;
+        items.value.products = backupItems.value;
         items.value.products = items.value.products.filter(item => item.title.toLowerCase().includes(search.toLowerCase()));
     }
     function orderItems(order) {
