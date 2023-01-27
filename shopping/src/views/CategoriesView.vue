@@ -1,4 +1,5 @@
 <script setup>
+import { useRoute } from 'vue-router';
 import { useItemsStore } from '@/stores/items';
 import { onMounted, computed, ref, watch } from 'vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
@@ -9,6 +10,7 @@ const selectedCategory = ref('smartphones');
 
 onMounted(() => {
     store.fetchCategories();
+    useRoute().params.category && (selectedCategory.value = useRoute().params.category);
     store.fetchItemsByCategories(selectedCategory.value);
 });
 

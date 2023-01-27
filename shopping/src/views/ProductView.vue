@@ -35,6 +35,12 @@ const closeImageViewer = () => {
     <main>
         <LoadingSpinner :display="isLoading" />
         <ImageViewer @close="closeImageViewer" :image="imageViewerSrc" />
+        <div class="mt-4 pl-4">
+            <button @click="router.push({ name: 'categories', params: {category: product.category}})"
+                class="text-sm font-medium text-green-600 hover:text-green-500 capitalize">
+                ← {{ product.category }}
+            </button>
+        </div>
         <!-- Image gallery -->
         <div class="gallery">
             <div v-if="product.images?.length > 0" @click="openImageViewer(product.images[0])" class="aspect-w-4 aspect-h-5 lg:aspect-w-3 lg:aspect-h-4 imgDiv">
