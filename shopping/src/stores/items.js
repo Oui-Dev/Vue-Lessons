@@ -37,11 +37,7 @@ export const useItemsStore = defineStore('items', () => {
                 backupItems.value = tmp;
             };
 
-            if(!items.value.products || items.value.products.length === 0) {
-                fetchItems().then(() => subFct());
-            } else {
-                subFct();
-            }
+            fetchItems().then(() => subFct());
         } else {
             isLoading.value = true;
             fetch(`https://dummyjson.com/products/category/${category}`)
