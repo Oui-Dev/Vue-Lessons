@@ -1,4 +1,6 @@
 <script setup>
+import { XMarkIcon } from '@heroicons/vue/20/solid';
+
 const emit = defineEmits(['close']);
 
 defineProps({
@@ -16,6 +18,7 @@ const close = (e) => {
 
 <template>
     <section v-if="image" @click="(e) => close(e)">
+        <XMarkIcon class="fixed top-4 right-4 w-8 h-8 text-white cursor-pointer" />
         <img :src="image" alt="image" />
     </section>
 </template>

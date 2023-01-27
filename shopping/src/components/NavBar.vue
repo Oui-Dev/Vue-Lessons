@@ -1,12 +1,21 @@
 <script setup>
     import { RouterLink } from 'vue-router';
+    import { useItemsStore } from '@/stores/items';
     import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
-    import { ref } from 'vue';
+    import { ref, onMounted, computed } from 'vue';
 
     const isReduced = ref(true);
+    const store = useItemsStore();
+
     const openSideBar = () => {
         isReduced.value = !isReduced.value;
     };
+
+    onMounted(() => {
+        store.fetchCategories();
+    });
+
+    const categories = computed(() => store.items.categories ?? []);
 </script>
 
 <template>
@@ -20,8 +29,13 @@
             </div>
 
             <div class="menu-side">
-                <RouterLink :to="{name: 'products'}">Produits</RouterLink>
-                <RouterLink :to="{name: 'categories'}">Catégorie</RouterLink>
+                <RouterLink :to="{name: 'products'}">All products</RouterLink>
+                <RouterLink v-for="category in categories.slice(0, 3)" :key="category" :to="{name: 'categories', params: {category: category}}">
+                    {{ category }}
+                </RouterLink>
+                <RouterLink :to="{name: 'categories', params: {category: 'others'}}">
+                    Others
+                </RouterLink>
             </div>
 
             <div class="button-side">
@@ -47,9 +61,14 @@
             <div class="absolute top-16 -mt-px right-0 z-10 w-screen max-w-lg">
                 <div id="sidebar" class="overflow-hidden shadow-lg rounded-b-lg border-t border-gray-300" :class="{'reduced' : isReduced}">
                     <div class="relative grid gap-2 px-5 py-5 text-sm md:text-base">
-                        <RouterLink :to="{name: 'products'}">Tous les produits</RouterLink>
-                        <RouterLink :to="{name: 'categories'}">Catégorie</RouterLink>
-                        <RouterLink :to="{name: 'cart'}">Mon panier</RouterLink>
+                        <RouterLink :to="{name: 'products'}">All products</RouterLink>
+                        <RouterLink v-for="category in categories.slice(0, 3)" :key="category" :to="{name: 'categories', params: {category: category}}">
+                            {{ category }}
+                        </RouterLink>
+                        <RouterLink :to="{name: 'categories', params: {category: 'others'}}">
+                            Others
+                        </RouterLink>
+                        <RouterLink :to="{name: 'cart'}">My cart</RouterLink>
                     </div>
                 </div>
             </div>
@@ -65,7 +84,7 @@ header {
         @apply justify-between items-center max-w-7xl h-16 mx-auto px-4 md:px-10;
 
         a {
-            @apply text-gray-600;
+            @apply text-gray-600 capitalize;
 
             &.router-link-exact-active {
                 @apply text-green-600;

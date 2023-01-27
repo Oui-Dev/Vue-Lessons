@@ -3,6 +3,7 @@ import { useItemsStore } from '@/stores/items';
 import { onMounted, computed } from 'vue';
 import ProductCard from '@/components/ProductCard.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import SelectFilter from '../components/SelectFilter.vue';
 
 const store = useItemsStore();
 
@@ -17,6 +18,8 @@ const isLoading = computed(() => store.isLoading ?? false);
 <template>
     <main>
         <LoadingSpinner :display="isLoading" />
+        <SelectFilter @search="" @filter="" />
+
         <h2 class="sr-only">Products</h2>
 
         <div v-if="!isLoading" class="grid grid-cols-2 gap-y-10 gap-x-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-x-8">
@@ -24,3 +27,9 @@ const isLoading = computed(() => store.isLoading ?? false);
         </div>
     </main>
 </template>
+
+<style lang="scss" scoped>
+    input {
+        @apply block w-full rounded-full pl-10 py-2 bg-transparent border border-gray-900 sm:text-sm focus:outline-green-500;
+    }
+</style>

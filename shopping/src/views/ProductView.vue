@@ -38,7 +38,7 @@ const closeImageViewer = () => {
         <div class="mt-4 pl-4">
             <button @click="router.push({ name: 'categories', params: {category: product.category}})"
                 class="text-sm font-medium text-green-600 hover:text-green-500 capitalize">
-                ← {{ product.category }}
+                ← Back to {{ product.category }}
             </button>
         </div>
         <!-- Image gallery -->
@@ -81,12 +81,13 @@ const closeImageViewer = () => {
                                 aria-hidden="true" />
                         </div>
                         <p class="sr-only">{{ reviewsAverage }} out of 5 stars</p>
+                        <pp class="ml-3 text-sm font-medium text-green-600">{{ product.stock }} reviews</pp>
                     </div>
                 </div>
 
                 <button @click="addToCart"
                     class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-green-500 py-3 px-8 text-base font-medium text-white hover:bg-green-400">
-                    Ajouter au panier
+                    Add to bag
                 </button>
             </div>
 

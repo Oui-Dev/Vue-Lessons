@@ -1,36 +1,30 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import { useItemsStore } from '@/stores/items';
-import { onMounted, computed, ref, watch } from 'vue';
-import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import { onMounted, computed, watch } from 'vue';
 import ProductCard from '@/components/ProductCard.vue';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import SelectFilter from '../components/SelectFilter.vue';
 
 const store = useItemsStore();
-const selectedCategory = ref('smartphones');
+const route = useRoute();
 
 onMounted(() => {
-    store.fetchCategories();
-    useRoute().params.category && (selectedCategory.value = useRoute().params.category);
-    store.fetchItemsByCategories(selectedCategory.value);
+    store.fetchItemsByCategories(route.params.category);
 });
 
-watch(selectedCategory, (value) => {
-    store.fetchItemsByCategories(value);
+watch(() => route.params, (value) => {
+    store.fetchItemsByCategories(value.category);
 });
 
 const products = computed(() => store.items.products ?? []);
-const categories = computed(() => store.items.categories ?? []);
 const isLoading = computed(() => store.isLoading ?? false);
 </script>
 
 <template>
     <main>
         <LoadingSpinner :display="isLoading" />
-        <div class="flex flex-col items-center w-full">
-            <select v-model="selectedCategory" class="mb-8 w-fit">
-                <option v-for="(category, index) in categories" :key="index" :value="category">{{ category }}</option>
-            </select>
-        </div>
+        <SelectFilter @search="" @filter="" />
 
         <h2 class="sr-only">Products</h2>
 
@@ -39,3 +33,17 @@ const isLoading = computed(() => store.isLoading ?? false);
         </div>
     </main>
 </template>
+
+<style lang="scss" scoped>
+    input {
+        @apply block w-full rounded-full pl-10 pr-32 py-2 bg-transparent border border-gray-900 sm:text-sm focus:outline-green-500;
+    }
+
+    select {
+        @apply h-full rounded-md border-transparent bg-transparent pr-2 text-right text-gray-700 focus:outline-none cursor-pointer;
+        
+        option {
+            @apply text-gray-700;
+        }
+    }
+</style>
