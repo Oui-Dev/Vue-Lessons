@@ -37,7 +37,7 @@ function removeAllFromCart() {
 </script>
 
 <template>
-    <div class="relative">
+    <div class="relative w-36 md:w-40 lg:w-48">
         <RouterLink :to="{name: 'product', params: {id: product.id}}">
             <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
                 <img :src="product.thumbnail" :alt="product.title"

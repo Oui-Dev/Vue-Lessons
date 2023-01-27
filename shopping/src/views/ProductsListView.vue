@@ -22,7 +22,7 @@ const isLoading = computed(() => store.isLoading ?? false);
 
         <h2 class="sr-only">Products</h2>
 
-        <div v-if="!isLoading" class="grid grid-cols-2 gap-y-10 gap-x-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-x-8">
+        <div v-if="!isLoading" class="flex justify-center gap-12 flex-wrap">
             <ProductCard v-for="item in products" :key="item.id" :product="item" class="group" />
         </div>
     </main>

@@ -19,7 +19,7 @@ watch(() => ({...form}), (newValue, oldValue) => {
 </script>
 
 <template>
-    <div class="mx-auto max-w-md relative rounded-full shadow-sm my-5">
+    <div class="mx-auto max-w-md relative rounded-full shadow-sm mt-3 mb-8">
         <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <MagnifyingGlassIcon class="h-5 w-5 text-gray-800" />
         </div>
