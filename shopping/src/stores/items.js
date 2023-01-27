@@ -26,15 +26,27 @@ export const useItemsStore = defineStore('items', () => {
             });
     }
     function fetchItemsByCategories(category) {
-        isLoading.value = true;
-        fetch(`https://dummyjson.com/products/category/${category}`)
-            .then(res => res.json())
-            .then(data => {
-                const tmp = data.products.sort((a, b) => b.rating - a.rating);
-                items.value.products = tmp;
-                backupItems.value = tmp;
-                setTimeout(() => {isLoading.value = false;}, 500);
-            });
+        if(category === 'others') {
+            if(items.value.products.length === 0) fetchItems(); 
+
+            const tmp = items.value.products.filter(
+                item => item.category !== 'smartphones'
+                && item.category !== 'laptops'
+                && item.category !== 'fragrances'
+            ).sort((a, b) => b.rating - a.rating);
+            items.value.products = tmp;
+            backupItems.value = tmp;
+        } else {
+            isLoading.value = true;
+            fetch(`https://dummyjson.com/products/category/${category}`)
+                .then(res => res.json())
+                .then(data => {
+                    const tmp = data.products.sort((a, b) => b.rating - a.rating);
+                    items.value.products = tmp;
+                    backupItems.value = tmp;
+                    setTimeout(() => {isLoading.value = false;}, 500);
+                });
+        }
     }
     function fetchItemByID(id) {
         isLoading.value = true;
