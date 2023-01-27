@@ -1,21 +1,16 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
+import { ref, computed } from 'vue';
 
-export const useCartStore = defineStore({
-    id: 'cart',
-    state: () => ({
-        items: []
-    }),
-    actions: {
-        getCartItems() {
-            return this.items
-        },
+export const useCartStore = defineStore('cart', () => {
+    const items = ref([]);
+    const getCartItems = computed(() => items.value);
 
-        addToCart(item) {
-            this.items.push(item)
-        },
-        
-        removeFromCart(item) {
-            this.items = this.items.filter(i => i.id !== item.id)
-        }
+    function addToCart(item) {
+        items.value.push(item);
     }
-})
+    function removeFromCart(item) {
+        items.value = items.value.filter(i => i.id !== item.id);
+    }
+
+    return { getCartItems, addToCart, removeFromCart };
+});
